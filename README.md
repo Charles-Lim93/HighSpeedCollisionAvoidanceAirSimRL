@@ -3,7 +3,7 @@
 ## 📌 Overview
 High-Speed collision avoidance based on RL in AirSim simulation & Unreal Engine
 
-This repository contains the implementation of the reinforcement learning framework presented at the **AIAA SciTech 2025 Forum** [1]. An extended version of this work has been submitted to the *Journal of Aerospace Information Systems (JAIS)*.
+This repository contains the implementation of the reinforcement learning framework presented at the **AIAA SciTech 2025 Forum**. An extended version of this work has been submitted to the *Journal of Aerospace Information Systems (JAIS)*.
 
 > **Paper Link:** [AIAA SciTech 2025 Paper](https://arc.aiaa.org/doi/abs/10.2514/6.2025-2275)
 
@@ -45,4 +45,17 @@ The code has been tested on **Windows 10** with **Python 3.8+**.
 ├── setup_path.py                             # Path setup utility
 └── README.md                                 # Project documentation
 
+## 📂 Citation
 
+If you use this code for your research, please cite our AIAA SciTech 2025 paper:
+
+@inproceedings{Lim2025DualAugmented,
+  title={Dual-Augmented Time-Series Data for Deep Reinforcement Learning in High-Speed Collision Avoidance of UAV},
+  author={Lim, Chulsoo and Ahn, Hyungjoo and Lee, Seongheon and Zewge, Natnael S. and Chang, Bohyun and Bang, Hyochoong},
+  booktitle={AIAA SCITECH 2025 Forum},
+  year={2025},
+  month={January},
+  publisher={American Institute of Aeronautics and Astronautics},
+  doi={10.2514/6.2025-2275},
+  url={[https://arc.aiaa.org/doi/abs/10.2514/6.2025-2275](https://arc.aiaa.org/doi/abs/10.2514/6.2025-2275)}
+}
