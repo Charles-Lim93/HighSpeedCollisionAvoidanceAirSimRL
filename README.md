@@ -20,9 +20,9 @@ The code has been tested on **Windows 10** with **Python 3.8+**.
 * Ensure your `settings.json` enables API control.
 
 ### 2. Running
-*'python ppo_drone_1d.py' for data augmented framework
-*'python ppo_drone_3d.py' for nominal single-image RL framework
-*'python ppo_drone_base.py' for nominal single-image RL framework
+* 'python ppo_drone_1d.py' for data augmented framework.
+* 'python ppo_drone_3d.py' for nominal single-image RL framework.
+* 'python ppo_drone_base.py' for nominal single-image RL framework.
 
 
 ## 📂 File Structure
