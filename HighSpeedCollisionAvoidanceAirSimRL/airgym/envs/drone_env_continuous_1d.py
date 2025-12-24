@@ -47,9 +47,6 @@ class AirSimDroneContinuous1dEnv(AirSimContinuous1dEnv):
         print("------------ AEROSPACE SYSTEMS AND CONTROL LABORATORY ------------")
         
         print("-----INITIALIZATING-----")
-        # angular_velocity = np.array(self.drone_state.kinematics_estimated.angular_velocity.x_val,
-        #                             self.drone_state.kinematics_estimated.angular_velocity.y_val,
-        #                             self.drone_state.kinematics_estimated.angular_velocity.z_val)
         self.state = {
             "position": np.zeros(3),
             "prev_position": np.zeros(3),
@@ -60,14 +57,6 @@ class AirSimDroneContinuous1dEnv(AirSimContinuous1dEnv):
         }
         self.info = {"collision": False}
         
-        # self.observation_space = spaces.Dict(
-        #     {
-        #         # Sequential Image Data
-        #         "Image": self.image_request,
-        #         # Sequential Attitude Data
-        #         "angular_velocity": angular_velocity,  
-        #     }
-        # )
         self._setup_drone()
     
     
@@ -79,31 +68,19 @@ class AirSimDroneContinuous1dEnv(AirSimContinuous1dEnv):
         self.drone.armDisarm(True)
         # Get collision time stamp
         self.collision_time = self.drone.simGetCollisionInfo().time_stamp
-        # x_pos = 0.0
-        # y_pos = (np.random.randint(11) - 5)
-        # z_pos = 0.0
-        # pose = airsim.Pose(airsim.Vector3r(x_pos, y_pos, z_pos))
-        # self.drone.simSetVehiclePose(pose=pose, ignore_collision=True)
-        # print("---------------------RESET AGENT---------------------")
         
     def step(self, action):
  
         self._do_action(action)
-        curr_pos = self.drone.getMultirotorState().kinematics_estimated.position
-        if hasattr(self, 'last_plot_pos'):
-            self.drone.simPlotLineList(
-            points=[self.last_plot_pos, curr_pos],
-            color_rgba=[1.0, 0.0, 0.0, 1.0], thickness=5.0, duration=0.0, is_persistent=True)
-        self.last_plot_pos = curr_pos
+        # curr_pos = self.drone.getMultirotorState().kinematics_estimated.position
+        # if hasattr(self, 'last_plot_pos'):
+        #     self.drone.simPlotLineList(
+        #     points=[self.last_plot_pos, curr_pos],
+        #     color_rgba=[1.0, 0.0, 0.0, 1.0], thickness=5.0, duration=0.0, is_persistent=True)
+        # self.last_plot_pos = curr_pos
     
-
         obs, info = self._get_obs()
         reward, done = self._compute_reward(obs)
-
-        # [추가 2] "테스트 모드" + "종료됨" + "성공함" -> 사진 저장
-        # if done and self.is_test and self.info.get("is_success", False):
-        #     print("🎉 성공! 궤적 사진 저장 중...")
-        #     self._save_trajectory_snapshot()
 
         return obs, reward, done, info
 
@@ -135,27 +112,15 @@ class AirSimDroneContinuous1dEnv(AirSimContinuous1dEnv):
         timestep = 0.1
         referenceSpeed = 8
         action = round(float(action),3)
-        # Action Command
         self.drone.moveByVelocityZAsync(referenceSpeed,action,-2.0,timestep).join()
-            # # Prevent swaying
-        # self.drone.moveByVelocityAsync(vx=0, vy=0, vz=0, duration=0.01)
-
-        # print("Action Command : ",action)
         
            
     def transform_obs(self, response):
         
         img1d = np.array(response.image_data_float, dtype=np.float)
         
-        # print(img1d.shape)
-        # print("image1d")
-        # # print(img1d)
-        # print(img1d.size)
         try:
             img1d = 255 / np.maximum(np.ones(img1d.size), img1d)
-            # print("MODIFIED")
-            # print(img1d)
-            # print(img1d.shape)
         except ZeroDivisionError:
             print("ZeroDivisionError")
             print("WINTER CONTINGENCY PLAN")
@@ -166,16 +131,8 @@ class AirSimDroneContinuous1dEnv(AirSimContinuous1dEnv):
             img2d = np.zeros([120,120])
             print("ERROR____WINTER CONTRINGENCY")
 
-        # print("img2d.shape")
-
-        # print(img2d.shape)
         image = Image.fromarray(img2d)
-        # print("IMAGE")
-        # print(image)
         im_final = np.array(image.convert("L"))
-                # Sometimes no image returns from api
-        # print(im_final.shape)
-        # print(im_final)
         try:
             return im_final
         except:
@@ -213,12 +170,7 @@ class AirSimDroneContinuous1dEnv(AirSimContinuous1dEnv):
         attitute_batch = np.zeros([3, 2])
         attitute = np.zeros([2,1])
         responses = self.drone.simGetImages([
-        # airsim.ImageRequest("0", airsim.ImageType.DepthVis),  #depth visualization image
         airsim.ImageRequest("0", airsim.ImageType.DepthPerspective, True)]) #depth in perspective projection
-        #scene vision image in uncompressed RGBA array
-        # airsim.ImageRequest("0", airsim.ImageType.Scene), #scene vision image in png format
-        # airsim.ImageRequest("0", airsim.ImageType.Scene, False, False)
-        
         attitute_responses = self.drone.getMultirotorState()
         attitute = [round(attitute_responses.kinematics_estimated.linear_velocity.x_val,3), round(attitute_responses.kinematics_estimated.linear_velocity.y_val,3)]
         
@@ -294,21 +246,15 @@ class AirSimDroneContinuous1dEnv(AirSimContinuous1dEnv):
         self.state["pose"] = self.drone_state.kinematics_estimated
         self.state["collision"] = self.drone.simGetCollisionInfo().has_collided
         self.info["collision"] = self.is_collision()
-        # print(self.info["collision"])
+        
         if self.info["collision"] == True:
-            # print("collsion_occur----eliminate outlier and replace with previous data")
             input_attitute[attitute_responses_queue.maxsize-1,:] = input_attitute[attitute_responses_queue.maxsize-2,:]
-            # print(input_attitute)
+        
         # Normalization
         input_attitute[:][1] = input_attitute[:][1] / reference_speed
         input_attitute[:][0] = input_attitute[:][1] / reference_speed_y
         
         obs = {"Image": input_image, "Linear velocity": input_attitute}
-        # print(obs)
-        # print(obs.get('Linear velocity'))
-        # print(obs.get('Linear velocity')[0][0])
-        # print("x : ",obs.get('Linear velocity')[0][0])
-        # print("y : ",obs.get('Linear velocity')[0][1])
         return obs, self.info
     
     def _compute_reward(self, obs):
@@ -328,15 +274,8 @@ class AirSimDroneContinuous1dEnv(AirSimContinuous1dEnv):
             action_accelerator =  round((average_linear_velocity / reference_speed)**2,7)
             collision_penalty = -20
             go_to_center = round(1 - (self.state["position"].y_val / goal_point[1])**2,5)
-            # print(reward_distance * 10)
-            # print(action_accelerator * 100)
-            # print(collision_penalty )
-            # print(go_to_center * 2.5)
             reward = reward_distance * 10 + action_accelerator * 1000 + go_to_center * 2.5 + collision_penalty
-            # print("Reached Distance : ", traveled_distance)
 
- #           reward = reward_distance * 10 + action_accelerator * 5 + go_to_center * 2.5 + collision_penalty
-            # print("Collision Occurred, reward : ", reward)
 
         if self.state["position"].x_val > 105:
             done = 1
@@ -346,13 +285,7 @@ class AirSimDroneContinuous1dEnv(AirSimContinuous1dEnv):
             go_to_center = round(1 - abs(self.state["position"].y_val / goal_point[1])**2,5)
 
             reward = reward_distance * 10 + action_accelerator * 1000 + go_to_center * 2.5 + goal_incentive
-            # print(reward_distance * 10)
-            # print(action_accelerator * 5)
-            # print(goal_incentive )
-            # print(go_to_center * 2.5)
             success_count += 1
-            # print("Reached Distance : ", traveled_distance)
-            # print("total_success_rate : ",success_count)
             self.info["is_success"] = True
 
             print("Reached Goal, TOTAL Reward :",reward)
@@ -362,22 +295,20 @@ class AirSimDroneContinuous1dEnv(AirSimContinuous1dEnv):
 
     def _save_trajectory_snapshot(self):
         try:
-            # 파일명에 시간 찍어서 겹치지 않게 함
             filename = f"success_traj_{int(time.time())}.png"
             save_path = os.path.join(os.getcwd(), "trajectory_logs")
             if not os.path.exists(save_path):
                 os.makedirs(save_path)
             
-            # 현재 화면 캡처
             responses = self.drone.simGetImages([
                 airsim.ImageRequest("0", airsim.ImageType.Scene, False, False)
             ])
             
             if responses:
                 airsim.write_file(os.path.join(save_path, filename), responses[0].image_data_uint8)
-                print(f"저장 완료: {filename}")
+                print(f"Success!: {filename}")
         except Exception as e:
-            print(f"이미지 저장 실패: {e}")                
+            print(f"Fail: {e}")                
 
     def is_collision(self):
         current_collision_time = self.drone.simGetCollisionInfo().time_stamp
@@ -402,27 +333,5 @@ class TestEnv(AirSimDroneContinuous1dEnv):
         return reward, done
         
         
-    # def _get_obs(self):
-#         imageStack = 3
-#         responses = self.drone.simGetImages([self.image_request])
-#         image = self.transform_obs(responses[0]) * 0.5
-# #        time.sleep(0.01)
-#         responses = self.drone.simGetImages([self.image_request])
-#         image = image + self.transform_obs(responses[0]) * 0.3
-# #        time.sleep(0.01)
-#         responses = self.drone.simGetImages([self.image_request])
-#         image = image + self.transform_obs(responses[0]) * 0.2
-#         image.astype(int)
-
-#         # print("stack image : ",image)
-#         # print("stack type: ",type(image))
-#         # print("stack shape: ",image.shape)
-
-#         self.drone_state = self.drone.getMultirotorState()
-
-#         self.state["prev_pose"] = self.state["pose"]
-#         self.state["pose"] = self.drone_state.kinematics_estimated
-#         self.state["collision"] = self.drone.simGetCollisionInfo().has_collided
-        
-#         return image
     
+
