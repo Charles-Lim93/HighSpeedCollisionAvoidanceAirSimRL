@@ -18,7 +18,8 @@ The code has been tested on **Windows** with **Python 3.8+**.
 * You need a running instance of **Microsoft AirSim**.
 * Download the binary from [AirSim Releases](https://github.com/microsoft/AirSim/releases) or build your custom forest environment as described in the paper.
 * Ensure your `settings.json` enables API control.
-* .
+
+
 ├── config.yml                  # Configuration file for environment settings (Required)
 ├── drone_env_continuous_1d.py  # Custom Gym Environment wrapping AirSim API
 ├── ppo_drone_1d.py             # Main training script (PPO)
