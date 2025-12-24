@@ -40,11 +40,12 @@ The code has been tested on **Windows 10** with **Python 3.8+**.
 .
 ├── config.yml                                # Configuration file for environment settings (Required)
 ├── ./airgym/envs/drone_env_continuous_1d.py  # Custom Gym Environment wrapping AirSim API
-├── ppo_drone_1d.py                           # Main training script (PPO)
-├── ppo_drone_policy_run1d.py                 # Evaluation/Inference script
+├── ppo_drone_.py                           # Main training script (PPO)
+├── ppo_drone_policy_run.py                 # Evaluation/Inference script
 ├── setup_path.py                             # Path setup utility
 └── README.md                                 # Project documentation
-.
+```
+
 
 ##  Citation
 
