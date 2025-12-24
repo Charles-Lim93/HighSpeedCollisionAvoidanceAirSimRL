@@ -59,6 +59,4 @@ chapter = {},
 pages = {},
 doi = {10.2514/6.2025-2275},
 URL = {https://arc.aiaa.org/doi/abs/10.2514/6.2025-2275},
-eprint = {https://arc.aiaa.org/doi/pdf/10.2514/6.2025-2275},
-  url={[https://arc.aiaa.org/doi/abs/10.2514/6.2025-2275](https://arc.aiaa.org/doi/abs/10.2514/6.2025-2275)}
-}
+eprint = {https://arc.aiaa.org/doi/pdf/10.2514/6.2025-2275}}
