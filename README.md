@@ -20,9 +20,18 @@ The code has been tested on **Windows** with **Python 3.8+**.
 * Ensure your `settings.json` enables API control.
 
 
+## 📂 File Structure
+
+```text
+.
 ├── config.yml                  # Configuration file for environment settings (Required)
 ├── drone_env_continuous_1d.py  # Custom Gym Environment wrapping AirSim API
 ├── ppo_drone_1d.py             # Main training script (PPO)
 ├── ppo_drone_policy_run1d.py   # Evaluation/Inference script
 ├── setup_path.py               # Path setup utility
 └── README.md                   # Project documentation
+
+### 2. Training
+
+* 'python ppo_drone_1d.py'
+* 
