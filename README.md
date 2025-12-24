@@ -14,7 +14,7 @@ This repository contains the implementation of the reinforcement learning framew
 * **Action Space:** Continuous velocity control
 
 ## 🛠️ Prerequisites
-w
+
 The code has been tested on **Windows 10** with **Python 3.8+**.
 
 ### 1. AirSim Setup
@@ -44,8 +44,9 @@ The code has been tested on **Windows 10** with **Python 3.8+**.
 ├── ppo_drone_policy_run1d.py                 # Evaluation/Inference script
 ├── setup_path.py                             # Path setup utility
 └── README.md                                 # Project documentation
+.
 
-## 📂 Citation
+##  Citation
 
 If you use this code for your research, please cite our AIAA SciTech 2025 paper:
 
