@@ -71,13 +71,12 @@ model = PPO(
 
 
 model.learn(
-    total_timesteps=120000,
+    total_timesteps=1000000,
     callback=eval_callback
 )
 
-# model.save("ppo_airsim_drone_policy_20230608_episode100000_speed5ms_1d")
-# model.save("ppo_airsim_drone_policy_20251119_episode120000_speed8ms_1d_forest_test")
-model.save("ppo_airsim_drone_policy_20251220_episode100000_speed8ms_1d_normal")
+model.save("ppo_airsim_drone_policy_20251220_episode1000000_speed8ms")
 
 print("Model saved.")
+
 
