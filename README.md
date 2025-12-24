@@ -21,8 +21,14 @@ The code has been tested on **Windows 10** with **Python 3.8+**.
 
 ### 2. Running
 * 'python ppo_drone_1d.py' for data augmented framework.
-* 'python ppo_drone_3d.py' for nominal single-image RL framework.
+* 'python ppo_drone_3d.py' for raw 3 vanilla time series RL framework.
 * 'python ppo_drone_base.py' for nominal single-image RL framework.
+
+### 3. Evaluation
+* 'python ppo_drone_policy_run1d.py' for the data augmented framework.
+* 'python ppo_drone_policy_run3d.py' for raw 3 vanilla time series RL framework.
+* 'python ppo_drone_policy_run_based.py' for nominal single-image RL framework.
+
 
 
 ## 📂 File Structure
@@ -35,4 +41,5 @@ The code has been tested on **Windows 10** with **Python 3.8+**.
 ├── ppo_drone_policy_run1d.py                 # Evaluation/Inference script
 ├── setup_path.py                             # Path setup utility
 └── README.md                                 # Project documentation
+
 
