@@ -12,7 +12,6 @@ from stable_baselines3.common.vec_env import DummyVecEnv, VecTransposeImage
 from stable_baselines3.common.evaluation import evaluate_policy
 from stable_baselines3.common.callbacks import EvalCallback
 
-# NumPy 2.0 이상 호환성 패치
 if not hasattr(np, 'float'):
     np.float = float
 if not hasattr(np, 'int'):
@@ -49,9 +48,6 @@ env = DummyVecEnv(
 env = VecTransposeImage(env)
 
 # Load an existing model
-# model = PPO.load(env=env, path="./1dlogs/20230606/10000_2ms.zip")
-# model = PPO.load(env=env, path="./ppo_airsim_drone_policy_20251104_episode200000_speed8ms_1d_indoor.zip")
-# model = PPO.load(env=env, path="./ppo_airsim_drone_policy_20251118_episode120000_speed8ms_1d_forest.zip")
 model = PPO.load(env=env, path="./1dlogs/best_model.zip")
 
 # RUN
@@ -62,4 +58,5 @@ obs = env.reset()
 
 mean_reward, std_reward = evaluate_policy(model, model.get_env(), n_eval_episodes=10)
 print(mean_reward, std_reward)
+
 
