@@ -1,0 +1,25 @@
+{
+  "SeeDocsAt": "https://github.com/Microsoft/AirSim/blob/main/docs/settings.md",
+  "SettingsVersion": 1.2,
+  "LocalHostIp": "127.0.0.1",
+  "ClockSpeed": 1.0,
+  "SimMode": "Multirotor",
+  "ViewMode": "FlyWithMe",
+  "Cameras": [
+    { "CameraName": "0", "ImageType": 0, "PixelsAsFloat": false, "VehicleName": "", "Compress": true },
+    { "CameraName": "0", "ImageType": 1, "PixelsAsFloat": false, "VehicleName": "", "Compress": true },
+    { "CameraName": "0", "ImageType": 2, "PixelsAsFloat": false, "VehicleName": "", "Compress": true },
+    { "CameraName": "1", "ImageType": 3, "PixelsAsFloat": false, "VehicleName": "", "Compress": true },
+    { "CameraName": "1", "ImageType": 4, "PixelsAsFloat": false, "VehicleName": "", "Compress": true }
+  ],
+  "CameraDefaults": {
+    "CaptureSettings": [
+      { "ImageType": 0, "Width": 120, "Height": 120, "FOV_Degrees": 120 },
+      { "ImageType": 1, "Width": 120, "Height": 120, "FOV_Degrees": 120 },
+      { "ImageType": 2, "Width": 120, "Height": 120, "FOV_Degrees": 120 },
+      { "ImageType": 3, "Width": 120, "Height": 120, "FOV_Degrees": 120 },
+      { "ImageType": 4, "Width": 120, "Height": 120, "FOV_Degrees": 120 },
+      { "ImageType": 5, "Width": 120, "Height": 120, "FOV_Degrees": 120 }
+    ]
+  }
+}

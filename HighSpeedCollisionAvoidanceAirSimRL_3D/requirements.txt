@@ -1,0 +1,18 @@
+# Tested with Python 3.9.24 (conda). Versions are the exact ones used for the paper.
+#
+# NOTE on torch: the paper used the CUDA 12.1 build (2.4.0+cu121). Install it with
+#   pip install torch==2.4.0 --index-url https://download.pytorch.org/whl/cu121
+# before installing the rest (a CPU-only torch also works, just slower).
+#
+# NOTE on gym: gym==0.21.0 needs an older setuptools/wheel on recent pip:
+#   pip install "setuptools<66" "wheel<0.40"   (only if gym fails to build)
+
+numpy==1.26.4
+gym==0.21.0
+stable-baselines3==1.8.0
+torch==2.4.0
+airsim==1.8.1
+msgpack-rpc-python==0.4.1
+opencv-contrib-python==4.10.0.84
+Pillow==11.3.0
+PyYAML==6.0.3

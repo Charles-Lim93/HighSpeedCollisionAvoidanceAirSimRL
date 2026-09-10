@@ -13,6 +13,13 @@ This repository contains the implementation of the reinforcement learning framew
 * **Observation Space:** Multi-modal fusion of Depth Images (120x120) and Vehicle Kinematics (Linear Velocity)
 * **Action Space:** Continuous velocity control
 
+## 🗂️ Repository layout
+
+| Folder | What it is |
+|---|---|
+| `HighSpeedCollisionAvoidanceAirSimRL/` | Original lateral (1-D action) implementation from the AIAA SciTech 2025 paper. The **Running**, **Evaluation** and **File Structure** sections below refer to this folder. |
+| `HighSpeedCollisionAvoidanceAirSimRL_3D/` | **Spatial-3D version** of the same framework (2-D action `[v_y, v_z]` at constant forward speed) that also contains the **proposed method** of the JAIS extension: fixed-weight multi-frame depth fusion plus in-loop safety features (`P_coll`, `Delta_r`) fed to the policy with a chance-constraint penalty. Self-contained; see its own `README.md`. |
+
 ## 🛠️ Prerequisites
 
 The code has been tested on **Windows 10** with **Python 3.8+**.

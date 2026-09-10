@@ -1,0 +1,57 @@
+# ==========================================================================
+# analysis/params.yml  --  SINGLE SOURCE OF TRUTH for tunable values.
+#
+# NO hardcoding anywhere else: envs, training scripts and
+# analysis scripts all read their tunables from this file via
+# analysis.params.load_params().
+#
+# ==========================================================================
+
+# ----- Safety injection master toggle -------------
+# true  -> inject the Safety obs key and the P_coll penalty
+# false -> skip both (no Safety key, no penalty)
+safety_injection: true    # master toggle for the safety-injection variant
+
+# ----- Spatial-3D vertical env -----------------------------------
+vertical:
+  reference_speed: 10.0        # action bound shared by v_y and v_z
+  forward_speed: 8.0           # constant forward vx command in _do_action
+  z_target: -2.0               # NED target altitude (negative = up); current hover is -2.0
+  z_scale: 10.0                # dz normalization in the radial reward (Delta_r)
+  z_init_range: [-1.0, 1.0]    # reset() initial-z random offset about z_target (clip to map bounds)
+  # ---- altitude hard bounds (NED: negative = up) to stop vertical escape ----
+  enforce_altitude_bounds: true   # if true, _do_action zeroes the climb/descent command at the bounds
+  z_ceiling: -3.5              # highest allowed altitude (MOST negative); climb (v_z<0) blocked above
+  z_floor: -0.5                # lowest  allowed altitude (LEAST negative); descent (v_z>0) blocked below
+  z_penalty_w: 0.0             # optional dense reward penalty per meter outside [z_ceiling, z_floor] (0 = off)
+
+# ----- Action command bounds ----------------------------------------------
+action:
+  a_y_max: 10.0                # |v_y| command bound
+  a_z_max: 4.0                 # |v_z| command bound (vertical env only)
+  clip_commands: false         # if true, _do_action clips to the above and the clip rate is logged
+
+# ----- Goal ----------------------------
+# [x, y, z] in NED. Keep this consistent with env reset() and config.yml.
+goal_point: [110.0, 10.0, -1.0]
+
+# ----- P_coll / Delta_r estimator ROI ----------------------
+# Operates on the FUSED depth image the policy observes. Pixel = 255/depth,
+# so HIGH intensity = CLOSE obstacle.
+roi:
+  roi_h: 40                    # ROI patch height (center crop of 120x120)
+  roi_w: 40                    # ROI patch width
+  intensity_max: 255.0         # fused-depth pixel scale (= 255)
+  top_k_frac: 0.10             # fraction of nearest ROI pixels averaged for P_coll
+  r_max: 20.0                  # clearance (m) used to normalize Delta_r to [0,1]
+
+# ----- Chance constraint -----------------------------------
+chance_constraint:
+  delta: 0.30                  # P_coll budget (penalty knee)
+  lambda_cc: 5.0               # penalty weight lambda (fixed start; optional dual update later)
+  speeds: [2, 5, 8, 10, 12]    # speed bins (m/s) for violation-rate tabulation
+
+# ----- Episode logging -----------------------------------------
+episode_log:
+  log_root: "logs/episodes"     # output tree: logs/episodes/{method}/{seed}/ep{N}.csv
+
